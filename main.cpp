@@ -44,6 +44,7 @@ int main()
 {
     srand(time(NULL));
 
+    
     //a bunch of variables that i will need.
     map<int, string> moveNames = {
         {1, "Rock"},
@@ -51,6 +52,12 @@ int main()
         {3, "Scissor"}
     };
 
+    string moveNamesArray[] = {"", "Rock", "Paper", "Scissor"};
+
+    
+    string opponents[] = {"", "Smart Sand", "Skynet", "AI Man"};
+
+    
     int playerChoice;
     
     //score
@@ -60,13 +67,13 @@ int main()
     int playerScore = 0;
     int playerlose = 0;
     int draw = 0;//just for the sake of it.
-    double hot = 0.0;
+    float hot = 0.0; //i tried double, but it doesn't looks great. so i try float and it worked.
 
     while (true) {
         //displaying texts and choice. 
         cout << "\n-----Rock Paper Scissor game-----\n \n";
         
-        cout << "a bunch of psychos" << " " << "<Smart Sand : " << smartSand << "> <Skynet : " << skyNet << "> <AI man : " << aiMan << "> <Tie : " << draw << ">\n                            PLAYER\n  <<Your score : " << playerScore <<">>   <<Your total losses : " << playerlose << ">> <<Your crime :" << hot << " degrees celsius\n";
+        cout << "a bunch of psychos" << " " << "<Smart Sand : " << smartSand << "> <Skynet : " << skyNet << "> <AI man : " << aiMan << "> <Tie : " << draw << ">\n                            PLAYER\n  <<Your score : " << playerScore <<">>   <<Your total losses : " << playerlose << ">> <<Your crime : " << hot << " degrees celsius>>\n";
 
         if (playerlose + draw == 10 && playerScore <= 5){
             cout << "Tras- i mean, what a bad luck.\n";
@@ -81,31 +88,39 @@ int main()
         cout << "Choice: ";
         cin >> playerChoice;
 
+        cout << "\n*----------------------------------------------------*";
+        
+
         if (playerChoice == 4) {
 
             cout << "<<Goodbye>>\n \n \n \n" << "=== Code Execution Successful ===\n";
             break;
         }
-        else if (moveNames.count(playerChoice) > 0) {
-            cout << "\n\nyou chose " << moveNames[playerChoice] << "\n";
+        else if (playerChoice >= 1 && playerChoice <= 3) {
+            cout << "\n>>you chose " << moveNamesArray[playerChoice] << "\n";
         }
         else {cout << "invalid input. your computer has become angry and we hate you\n";
             continue;
         }
-        
+        //don't ask me why.
+        if (playerChoice == 2) {
+            hot += 0.000000000000000254;
+        }
+
+
         int computerChoice = getComputerChoice();
         
         if (computerChoice == 1) {
 
-            cout << "<<Smart sand chose Rock because Rock are friend>>\n";
+            cout << ">>Smart sand chose Rock because Rock are friend\n";
         }
         else if (computerChoice == 2) {
 
-            cout << "<<Skynet chose Paper to save earth>>\n";
+            cout << ">>Skynet chose Paper to save earth\n";
         }
         else if (computerChoice == 3) {
 
-            cout << "<<Ai man chose Scissor to kill you>>\n";
+            cout << ">>Ai man chose Scissor to kill you\n";
         }
         
         //get the game result so i can do something with it
@@ -149,14 +164,30 @@ int main()
         else if ((result == 0) && (computerChoice == 2)) {
             cout << "you has increase paper demands, thus, increased earth's temperature by 0.000000000000000254 degrees celcius.\n Skynet will denitely kill you\n";
             draw ++;
-            hot += 0.000000000000000254;
         }
         else if ((result == 0) && (computerChoice == 3)) {
             cout << ".... don't even think about it. the only thing you need to know is that it's a tie.\n";
             draw ++;
         }
-        cout << "*----------------------------------------------------*\n \n";
 
+        switch (result)
+        {
+            case 1:
+            cout << "Player Score +1\n";
+            break;
+            case -1:
+            cout << opponents[computerChoice] << "Score +1\n";
+            break;
+            default:
+            break;
+        }
+
+        cout << "*----------------------------------------------------*\n \n";
+        
+       
+        std::cin.ignore();
+        cout << "Press enter to continue?:";
+        std::cin.get();
     }
     return 0;
 }
